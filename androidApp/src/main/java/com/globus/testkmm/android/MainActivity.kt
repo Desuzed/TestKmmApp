@@ -1,6 +1,7 @@
 package com.globus.testkmm.android
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.globus.testkmm.Greeting
 import com.globus.testkmm.data.network.HttpClientFactory
 import com.globus.testkmm.feature.news.NewsViewModel
+import com.globus.testkmm.paging.PagingState
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
@@ -47,7 +49,20 @@ class MainActivity : AppCompatActivity() {
 
         mainScope.launch {
             newsViewModel.data().collect {
-                articleAdapter.submitList(it)
+                when (it) {
+                    is PagingState.Success -> {
+                        articleAdapter.submitList(it.content)
+                    }
+                    is PagingState.Error -> {
+                        Log.i("Paging", "Error: ${it.error}")
+                    }
+                    is PagingState.Loading -> {
+                        Log.i("Paging", "Loading")
+                    }
+                    is PagingState.NoData -> {
+                        Log.i("Paging", "NoData")
+                    }
+                }
             }
         }
 

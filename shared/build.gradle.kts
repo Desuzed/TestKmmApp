@@ -32,7 +32,6 @@ kotlin {
                 implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
                 implementation("io.github.aakira:napier:1.4.1")
-                implementation("dev.icerock.moko:paging:0.7.1")
             }
         }
         val commonTest by getting {
