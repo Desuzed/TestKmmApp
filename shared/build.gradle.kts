@@ -32,7 +32,7 @@ kotlin {
                 implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
                 implementation("io.github.aakira:napier:1.4.1")
-                implementation("dev.icerock.moko:paging:0.7.1")
+                api("org.kodein.di:kodein-di:7.13.0")
             }
         }
         val commonTest by getting {
@@ -44,6 +44,7 @@ kotlin {
             dependencies {
                 implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
                 implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
+                implementation("org.kodein.di:kodein-di-framework-android-x-viewmodel:7.13.0")
             }
         }
         val androidTest by getting
