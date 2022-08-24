@@ -4,18 +4,19 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.globus.testkmm.Greeting
-import com.globus.testkmm.data.network.HttpClientFactory
+import com.globus.testkmm.di.DiApp
 import com.globus.testkmm.feature.news.NewsViewModel
 import com.globus.testkmm.paging.PagingState
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+import org.kodein.di.DI
+import org.kodein.di.DIAware
+import org.kodein.di.android.x.viewmodel.viewModel
 
-class MainActivity : AppCompatActivity() {
-    private val httpClientFactory = HttpClientFactory
-    private val greeting = Greeting(httpClientFactory)
+class MainActivity : AppCompatActivity(), DIAware {
+    override val di: DI by lazy { DiApp.di() }
+    private val newsViewModel: NewsViewModel by viewModel()
     private val mainScope = MainScope()
     private val articleAdapter by lazy {
         ArticleAdapter {}
@@ -25,8 +26,6 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val newsViewModel: NewsViewModel =
-            ViewModelProvider(this)[NewsViewModel::class.java]
 
         val recycler = findViewById<RecyclerView>(R.id.articleRecycler)
         with(recycler) {
@@ -68,5 +67,6 @@ class MainActivity : AppCompatActivity() {
 
         newsViewModel.initialLoad()
     }
+
 }
 
