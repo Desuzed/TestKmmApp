@@ -19,7 +19,3 @@ val repositoryModule = DI.Module("Repository module") {
     }
 
 }
-
-//val viewModelModule = DI.Module {
-//    bind<NewsViewModel> { provider { NewsViewModel(newsRepository = instance()) } }
-//}
