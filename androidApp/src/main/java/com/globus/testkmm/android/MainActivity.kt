@@ -5,18 +5,22 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.globus.testkmm.base.ViewModelFactory
 import com.globus.testkmm.di.DiApp
 import com.globus.testkmm.feature.news.NewsViewModel
 import com.globus.testkmm.paging.PagingState
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import org.kodein.di.DI
-import org.kodein.di.DIAware
-import org.kodein.di.android.x.viewmodel.viewModel
+import org.kodein.di.instance
 
-class MainActivity : AppCompatActivity(), DIAware {
-    override val di: DI by lazy { DiApp.di() }
-    private val newsViewModel: NewsViewModel by viewModel()
+class MainActivity : AppCompatActivity()/*, DIAware */ {
+//    override val di: DI by lazy { DiApp.di() }
+//    private val newsViewModel: NewsViewModel by viewModel()
+
+    private val newsViewModel: NewsViewModel by lazy {
+        val factory by DiApp.di().instance<ViewModelFactory>()
+        provideViewModel<NewsViewModel>(factory)
+    }
     private val mainScope = MainScope()
     private val articleAdapter by lazy {
         ArticleAdapter {}
